@@ -46,7 +46,7 @@ tail -f -n 0 out | \
 		shuf -n 5 noob.txt --random-source=/dev/random
 		;;
 	    '!source')
-		echo "Placeholder"
+		echo "https://github.com/ringtech/TempleBot"
 		;;
 	    '!explain')
 		echo "$explanation"
