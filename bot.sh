@@ -40,6 +40,28 @@ number () {
     esac
 }
 
+randchar () {
+    randomnum=$[ RANDOM % 7 ]
+    case $randomnum in
+	1)
+	    echo '@'
+	    ;;
+        2)
+            echo '@'
+	    ;;
+	# 3)
+	#     echo '-'
+	#     ;;
+	# 4)
+	#     echo '>'
+	#     ;;
+	*)
+	    echo ' '
+	    ;;
+    esac
+}
+	
+
 tail -f -n 0 out | \
     while read -r date time nick cmd arg1 msg; do
 	case $cmd in
@@ -57,6 +79,15 @@ tail -f -n 0 out | \
 		;;
 	    '!chat')
 		shuf -n 1 out --random-source=/dev/urandom
+		;;
+	    '!draw')
+		for i in {1..6}; do
+		    line=""
+		    for i in {1..50}; do
+			line="$line$(randchar)"
+		    done
+		    echo "$line"
+		done
 		;;
 	    '!explain')
 		echo "$explanation"
@@ -98,8 +129,5 @@ tail -f -n 0 out | \
 	    '!words')
 		wordchain /usr/share/dict/words 10
 		;;
-	    '!youtube')
-		word="ytsearch:$(shuf -n 1 --random-source=/dev/urandom /usr/share/dict/words)"
-		echo "http://youtube.com/watch?v=$(youtube-dl --get-id $word)"
 	esac
     done > in
