@@ -16,11 +16,14 @@ help='Bot for the #templeos channel. Lets you talk with god. For an explanation,
 wordchain () {
     sleep 3s			# Give God time to think, that's polite
     case $arg1 in
+	random)
+	    echo "$nick: $(shuf -n $(shuf -en 1 $(seq 1 40) --random-source=/dev/urandom) $1 --random-source=/dev/urandom | tr '\n' ' ')"
+	    ;;
 	''|*[!0-9]*)
-	    echo $(shuf -n $(shuf -en 1 $(seq 1 40) --random-source=/dev/urandom) $1 --random-source=/dev/urandom | tr '\n' ' ')
+	    echo "$nick: $(shuf -n 10 $1 --random-source=/dev/urandom | tr '\n' ' ')"
 	    ;;
 	*)
-	    echo $(shuf -n $arg1 $1 --random-source=/dev/urandom | tr '\n' ' ')
+	    echo "$nick: $(shuf -n $arg1 $1 --random-source=/dev/urandom | tr '\n' ' ')"
 	    ;;
 	esac
 }
@@ -41,10 +44,16 @@ tail -f -n 0 out | \
     while read -r date time nick cmd arg1 msg; do
 	case $cmd in
 	    '!bible'|'!oracle')
-		sleep 3s
 		LINE=$(number 100000)
+		echo "$nick:"
 		echo "Line $LINE:"
 		tail -n $LINE BIBLE.TXT | head -n 16
+		;;
+	    '!books')
+		LINE=$[$(number 100000)*3]
+		echo "$nick:"
+		echo "Line $LINE:"
+		tail -n $LINE Books.TXT | head -n 16
 		;;
 	    '!chat')
 		shuf -n 1 out --random-source=/dev/urandom
@@ -64,12 +73,16 @@ tail -f -n 0 out | \
 	    '!info')
 		echo "$info"
 		;;
+	    '!movie')
+		movie="$(number 100)"
+		grep -m 1 -A 1 "$movie " Movies.TXT
+		;;
 	    '!number')
 		number $arg1
 		;;
 	    '!pick')
 		sleep 3s
-		shuf -en 1 $arg1 $msg --random-source=/dev/urandom
+		echo "$nick: $(shuf -en 1 $arg1 $msg --random-source=/dev/urandom)"
 		;;
 	    '!recipe')
 		wordchain Ingredients.TXT 10
@@ -85,5 +98,8 @@ tail -f -n 0 out | \
 	    '!words')
 		wordchain /usr/share/dict/words 10
 		;;
+	    '!youtube')
+		word="ytsearch:$(shuf -n 1 --random-source=/dev/urandom /usr/share/dict/words)"
+		echo "http://youtube.com/watch?v=$(youtube-dl --get-id $word)"
 	esac
     done > in
