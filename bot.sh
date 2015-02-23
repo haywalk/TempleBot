@@ -11,13 +11,13 @@ The script should be run inside the directory of the channel, e.g. "~/irc/irc.ri
 
 explanation='This bot uses random numbers to pick lines and words from a few files. You can use this to talk to God, by making an offering to Him first. An offering can be anything that pleases God, like charming conversation or a good question. You can compare this to praying and opening a book at random, and looking at what it says.'
 
-help='Bot for the #templeos channel. Lets you talk with god. For an explanation, say "!explain". Available commands: !bible !chat !explain !happy !help !inane !info !number !recipe !restart !source !words'
+help='Bot for the #templeos channel. Lets you talk with god. For an explanation, say "!explain". Available commands: !bible !chat !explain !happy !help !inane !info !number !pick !recipe !restart !source !words'
 
 wordchain () {
     sleep 3s			# Give God time to think, that's polite
     case $arg1 in
 	''|*[!0-9]*)
-	    echo $(shuf -n 10 $1 --random-source=/dev/urandom | tr '\n' ' ')
+	    echo $(shuf -n $(shuf -en 1 $(seq 1 40) --random-source=/dev/urandom) $1 --random-source=/dev/urandom | tr '\n' ' ')
 	    ;;
 	*)
 	    echo $(shuf -n $arg1 $1 --random-source=/dev/urandom | tr '\n' ' ')
@@ -59,13 +59,17 @@ tail -f -n 0 out | \
 		echo "$help"
 		;;
 	    '!inane')
-		shuf -n 5 noob.txt --random-source=/dev/urandom
+		shuf -n 10 noob.txt --random-source=/dev/urandom
 		;;
 	    '!info')
 		echo "$info"
 		;;
 	    '!number')
 		number $arg1
+		;;
+	    '!pick')
+		sleep 3s
+		shuf -en 1 $arg1 $msg --random-source=/dev/urandom
 		;;
 	    '!recipe')
 		wordchain Ingredients.TXT 10
