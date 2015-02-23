@@ -37,7 +37,7 @@ number () {
 }
 
 cat | \
-    while read -r date time nick cmd arg1 msg; do
+    while read -r cmd arg1 msg; do
 	case $cmd in
 	    '!bible'|'!oracle')
 		sleep 3s
