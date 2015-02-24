@@ -11,7 +11,7 @@ The script should be run inside the directory of the channel, e.g. "~/irc/irc.ri
 
 explanation='This bot uses random numbers to pick lines and words from a few files. You can use this to talk to God, by making an offering to Him first. An offering can be anything that pleases God, like charming conversation or a good question. You can compare this to praying and opening a book at random, and looking at what it says.'
 
-help='Bot for the #templeos channel. Lets you talk with god. For an explanation, say "!explain". Available commands: !bible !chat !explain !happy !help !inane !info !number !pick !recipe !restart !source !words'
+help='Bot for the #templeos channel. Lets you talk with god. For an explanation, say "!explain". Available commands: !bible !books !chat !explain !happy !help !inane !info !number !pick !recipe !restart !source !words'
 
 wordchain () {
     sleep 3s			# Give God time to think, that's polite
@@ -66,7 +66,14 @@ tail -f -n 0 out | \
     while read -r date time nick cmd arg1 msg; do
 	case $cmd in
 	    '!bible'|'!oracle')
-		LINE=$(number 100000)
+		case $arg1 in
+		    ''|*[!0-9]*)
+			LINE=$(number 100000)
+			;;
+		    *)
+			LINE=$arg1
+			;;
+		esac
 		echo "$nick:"
 		echo "Line $LINE:"
 		tail -n $LINE BIBLE.TXT | head -n 16
