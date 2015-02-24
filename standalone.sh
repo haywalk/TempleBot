@@ -10,16 +10,19 @@ The script should be run inside the directory with the text files, for full func
 
 explanation='This bot uses random numbers to pick lines and words from a few files. You can use this to talk to God, by making an offering to Him first. An offering can be anything that pleases God, like charming conversation or a good question. You can compare this to praying and opening a book at random, and looking at what it says.'
 
-help='Bot for the #templeos channel. Lets you talk with god. For an explanation, say "!explain". Available commands: !bible !chat !explain !happy !help !inane !info !number !recipe !restart !source !words'
+help='Bot for the #templeos channel. Lets you talk with god. For an explanation, say "!explain". Available commands: !bible !books !chat !explain !happy !help !inane !info !number !pick !recipe !restart !source !words'
 
 wordchain () {
     sleep 3s			# Give God time to think, that's polite
     case $arg1 in
+	random)
+	    echo "$nick: $(shuf -n $(shuf -en 1 $(seq 1 40) --random-source=/dev/urandom) $1 --random-source=/dev/urandom | tr '\n' ' ')"
+	    ;;
 	''|*[!0-9]*)
-	    echo $(shuf -n 10 $1 --random-source=/dev/urandom | tr '\n' ' ')
+	    echo "$nick: $(shuf -n 10 $1 --random-source=/dev/urandom | tr '\n' ' ')"
 	    ;;
 	*)
-	    echo $(shuf -n $arg1 $1 --random-source=/dev/urandom | tr '\n' ' ')
+	    echo "$nick: $(shuf -n $arg1 $1 --random-source=/dev/urandom | tr '\n' ' ')"
 	    ;;
 	esac
 }
@@ -36,17 +39,61 @@ number () {
     esac
 }
 
+randchar () {
+    randomnum=$[ RANDOM % 7 ]
+    case $randomnum in
+	1)
+	    echo '@'
+	    ;;
+        2)
+            echo '@'
+	    ;;
+	# 3)
+	#     echo '-'
+	#     ;;
+	# 4)
+	#     echo '>'
+	#     ;;
+	*)
+	    echo ' '
+	    ;;
+    esac
+}
+	
+
 cat | \
     while read -r cmd arg1 msg; do
 	case $cmd in
 	    '!bible'|'!oracle')
-		sleep 3s
-		LINE=$(number 100000)
+		case $arg1 in
+		    ''|*[!0-9]*)
+			LINE=$(number 100000)
+			;;
+		    *)
+			LINE=$arg1
+			;;
+		esac
+		echo "$nick:"
 		echo "Line $LINE:"
 		tail -n $LINE BIBLE.TXT | head -n 16
 		;;
+	    '!books')
+		LINE=$[$(number 100000)*3]
+		echo "$nick:"
+		echo "Line $LINE:"
+		tail -n $LINE Books.TXT | head -n 16
+		;;
 	    '!chat')
 		shuf -n 1 out --random-source=/dev/urandom
+		;;
+	    '!draw')
+		for i in {1..6}; do
+		    line=""
+		    for i in {1..50}; do
+			line="$line$(randchar)"
+		    done
+		    echo "$line"
+		done
 		;;
 	    '!explain')
 		echo "$explanation"
@@ -58,13 +105,21 @@ cat | \
 		echo "$help"
 		;;
 	    '!inane')
-		shuf -n 5 noob.txt --random-source=/dev/urandom
+		shuf -n 10 noob.txt --random-source=/dev/urandom
 		;;
 	    '!info')
 		echo "$info"
 		;;
+	    '!movie')
+		movie="$(number 100)"
+		grep -m 1 -A 1 "$movie " Movies.TXT
+		;;
 	    '!number')
 		number $arg1
+		;;
+	    '!pick')
+		sleep 3s
+		echo "$nick: $(shuf -en 1 $arg1 $msg --random-source=/dev/urandom)"
 		;;
 	    '!recipe')
 		wordchain Ingredients.TXT 10
