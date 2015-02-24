@@ -1,17 +1,15 @@
 #!/bin/bash
 
-code='https://github.com/ringtech/TempleBot'
+# TempleBot, written by ring for the #templeos channel at irc.rizon.net.
+# This script uses ii as its irc client. For setting it up, refer to the documentation of ii.
+# ii can be found at http://tools.suckless.org/ii/.
+# The script should be run inside the directory of the channel, e.g. "~/irc/irc.rizon.net/#templeos/". This directory should also contain the text files, for full functionality. The code of this program, and those text files, can be found by running "!source".'
 
-copying='I dedicate all copyright interest in this software to the public domain. Do what you want.'
+source='https://github.com/ringtech/TempleBot
+I dedicate all copyright interest in this software to the public domain. Do what you want.'
 
-info='TempleBot, written by ring for the #templeos channel at irc.rizon.net.
-This script uses ii as its irc client. For setting it up, refer to the documentation of ii.
-ii can be found at http://tools.suckless.org/ii/.
-The script should be run inside the directory of the channel, e.g. "~/irc/irc.rizon.net/#templeos/". This directory should also contain the text files, for full functionality. The code of this program, and those text files, can be found by running "!source".'
-
-explanation='This bot uses random numbers to pick lines and words from a few files. You can use this to talk to God, by making an offering to Him first. An offering can be anything that pleases God, like charming conversation or a good question. You can compare this to praying and opening a book at random, and looking at what it says.'
-
-help='Bot for the #templeos channel. Lets you talk with god. For an explanation, say "!explain". Available commands: !bible !books !draw !explain !happy !help !info !movie !number !quote !recipe !restart !source !words'
+help='Oracle for the #templeos channel. Lets you talk with God. Available commands: !bible !books !happy !help !movie !number !quote !recipe !source !words
+This bot uses random numbers to pick lines and words from a few files. You can use this to talk to God, by making an offering to Him first. An offering can be anything that pleases God, like charming conversation or a good question. You can compare this to praying and opening a book at random, and looking at what it says.'
 
 wordchain () {
     sleep 3s			# Give God time to think, that's polite
@@ -40,28 +38,6 @@ number () {
     esac
 }
 
-randchar () {
-    randomnum=$[ RANDOM % 7 ]
-    case $randomnum in
-	1)
-	    echo '@'
-	    ;;
-        2)
-            echo '@'
-	    ;;
-	# 3)
-	#     echo '-'
-	#     ;;
-	# 4)
-	#     echo '>'
-	#     ;;
-	*)
-	    echo ' '
-	    ;;
-    esac
-}
-	
-
 tail -f -n 0 out | \
     while read -r date time nick cmd arg1 msg; do
 	case $cmd in
@@ -84,26 +60,11 @@ tail -f -n 0 out | \
 		echo "Line $LINE:"
 		tail -n $LINE Books.TXT | head -n 16
 		;;
-	    '!draw')
-		for i in {1..6}; do
-		    line=""
-		    for i in {1..50}; do
-			line="$line$(randchar)"
-		    done
-		    echo "$line"
-		done
-		;;
-	    '!explain')
-		echo "$explanation"
-		;;
 	    '!happy')
 		wordchain Happy.TXT 10
 		;;
 	    '!help')
 		echo "$help"
-		;;
-	    '!info')
-		echo "$info"
 		;;
 	    '!movie')
 		movie="$(number 100)"
@@ -125,11 +86,15 @@ tail -f -n 0 out | \
 		exec $0
 		;;
 	    '!source')
-		echo "$code"
-		echo "$copying"
+		echo "$source"
 		;;
 	    '!words')
 		wordchain /usr/share/dict/words 10
 		;;
+	    *)
+		if [ "$(echo $cmd | cut -c-1)" == "!" ]; then
+		    echo "$nick: $cmd is not a known command."
+		    cmd=""
+		fi
 	esac
     done > in
