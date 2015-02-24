@@ -69,7 +69,7 @@ tail -f -n 0 out | \
 		    lastspam=$(date +%s)
 		fi
 		;;
-	    *!feel*|tfw)
+	    *!feel*|*tfw*)
 		sleep 3s
 	        shuf -n 1 --random-source=/dev/urandom Smileys.TXT
 		;;
