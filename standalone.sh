@@ -1,16 +1,16 @@
 #!/bin/bash
 
-code='https://github.com/ringtech/TempleBot'
+# TempleBot, written by ring for the #templeos channel at irc.rizon.net.
+# This is a standalone script that does not use IRC.
+# The script should be run inside the directory with the text files, for full functionality. The code of this program, and those text files, can be found by running "!source".
 
-copying='I dedicate all copyright interest in this software to the public domain. Do what you want.'
+source='https://github.com/ringtech/TempleBot
+I dedicate all copyright interest in this software to the public domain. Do what you want.'
 
-info='TempleBot, written by ring for the #templeos channel at irc.rizon.net.
-This is a standalone script that does not use IRC.
-The script should be run inside the directory with the text files, for full functionality. The code of this program, and those text files, can be found by running "!source".'
+help='Oracle for the #templeos channel. Lets you talk with God. Available commands: !bible !books !feel !happy !help !movie !number !quote !recipe !source !words
+This bot uses random numbers to pick lines and words from a few files. You can use this to talk to God, by making an offering to Him first. An offering can be anything that pleases God, like charming conversation or a good question. You can compare this to praying and opening a book at random, and looking at what it says.'
 
-explanation='This bot uses random numbers to pick lines and words from a few files. You can use this to talk to God, by making an offering to Him first. An offering can be anything that pleases God, like charming conversation or a good question. You can compare this to praying and opening a book at random, and looking at what it says.'
-
-help='Bot for the #templeos channel. Lets you talk with god. For an explanation, say "!explain". Available commands: !bible !books !chat !explain !happy !help !inane !info !number !pick !recipe !restart !source !words'
+lastspam=0
 
 wordchain () {
     sleep 3s			# Give God time to think, that's polite
@@ -39,101 +39,78 @@ number () {
     esac
 }
 
-randchar () {
-    randomnum=$[ RANDOM % 7 ]
-    case $randomnum in
-	1)
-	    echo '@'
-	    ;;
-        2)
-            echo '@'
-	    ;;
-	# 3)
-	#     echo '-'
-	#     ;;
-	# 4)
-	#     echo '>'
-	#     ;;
-	*)
-	    echo ' '
-	    ;;
-    esac
-}
-	
-
 cat | \
     while read -r cmd arg1 msg; do
-	case $cmd in
-	    '!bible'|'!oracle')
-		case $arg1 in
-		    ''|*[!0-9]*)
-			LINE=$(number 100000)
-			;;
-		    *)
-			LINE=$arg1
-			;;
-		esac
-		echo "$nick:"
-		echo "Line $LINE:"
-		tail -n $LINE BIBLE.TXT | head -n 16
+	fullmsg="$cmd $arg1 $msg"
+	case $fullmsg in
+	    *!bible*|*!oracle*)
+		if [ "$[ $(date +%s) - lastspam ]" -gt "60" ]; then
+		    case $arg1 in
+			''|*[!0-9]*)
+			    LINE=$(number 100000)
+			    ;;
+			*)
+			    LINE=$arg1
+			    ;;
+		    esac
+		    echo "$nick:"
+		    echo "Line $LINE:"
+		    tail -n $LINE BIBLE.TXT | head -n 16
+		    lastspam=$(date +%s)
+		fi
 		;;
-	    '!books')
-		LINE=$[$(number 100000)*3]
-		echo "$nick:"
-		echo "Line $LINE:"
-		tail -n $LINE Books.TXT | head -n 16
+	    *!books*)
+		if [ "$[ $(date +%s) - lastspam ]" -gt "60" ]; then
+		    LINE=$[$(number 100000)*3]
+		    echo "$nick:"
+		    echo "Line $LINE:"
+		    tail -n $LINE Books.TXT | head -n 16
+		    lastspam=$(date +%s)
+		fi
 		;;
-	    '!chat')
-		shuf -n 1 out --random-source=/dev/urandom
+	    *!feel*|*tfw*)
+		sleep 3s
+	        shuf -n 1 --random-source=/dev/urandom Smileys.TXT
 		;;
-	    '!draw')
-		for i in {1..6}; do
-		    line=""
-		    for i in {1..50}; do
-			line="$line$(randchar)"
-		    done
-		    echo "$line"
-		done
-		;;
-	    '!explain')
-		echo "$explanation"
-		;;
-	    '!happy')
+	    *!happy*)
 		wordchain Happy.TXT 10
 		;;
-	    '!help')
+	    *!help*)
 		echo "$help"
 		;;
-	    '!inane')
-		shuf -n 10 noob.txt --random-source=/dev/urandom
-		;;
-	    '!info')
-		echo "$info"
-		;;
-	    '!movie')
+	    *!movie*)
 		movie="$(number 100)"
 		grep -m 1 -A 1 "$movie " Movies.TXT
 		;;
-	    '!number')
+	    *!number*)
 		number $arg1
 		;;
-	    '!pick')
-		sleep 3s
-		echo "$nick: $(shuf -en 1 $arg1 $msg --random-source=/dev/urandom)"
+	    *!quit*|*!exit*|*!stop*)
+		echo "The ride never ends"
 		;;
-	    '!recipe')
+	    *!quote*)
+		sleep 3s
+		fortune=$(ls Fortunes | shuf -n 1 --random-source=/dev/urandom)
+		cat "Fortunes/$fortune"
+		;;
+	    *!recipe*)
 		wordchain Ingredients.TXT 10
 		;;
-	    '!restart')
+	    *!restart*)
 		echo "TempleBot restarting..." 
 		exec $0
 		;;
-	    '!source')
-		echo "$code"
-		echo "$copying"
+	    *!source*)
+		echo "$source"
 		;;
-	    '!words')
+	    *!words*)
 		wordchain /usr/share/dict/words 10
+		;;
+	    *)
+		if [ "$(echo $cmd | cut -c-1)" == "!" ]; then
+		    echo "$nick: $cmd is not a known command."
+		    cmd=""
+		fi
 		;;
 	esac
     done
