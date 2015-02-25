@@ -55,7 +55,7 @@ cat | \
 		    esac
 		    echo "$nick:"
 		    echo "Line $LINE:"
-		    tail -n $LINE BIBLE.TXT | head -n 16
+		    tail -n $LINE Bible.TXT | head -n 16
 		    lastspam=$(date +%s)
 		fi
 		;;

@@ -42,9 +42,8 @@ number () {
 
 tail -f -n 0 out | \
     while read -r date time nick cmd arg1 msg; do
-	fullmsg="$cmd $arg1 $msg"
-	case $fullmsg in
-	    *!bible*|*!oracle*)
+	case $cmd in
+	    !bible|!oracle)
 		if [ "$[ $(date +%s) - lastspam ]" -gt "60" ]; then
 		    case $arg1 in
 			''|*[!0-9]*)
@@ -56,11 +55,11 @@ tail -f -n 0 out | \
 		    esac
 		    echo "$nick:"
 		    echo "Line $LINE:"
-		    tail -n $LINE BIBLE.TXT | head -n 16
+		    tail -n $LINE Bible.TXT | head -n 16
 		    lastspam=$(date +%s)
 		fi
 		;;
-	    *!books*)
+	    !books)
 		if [ "$[ $(date +%s) - lastspam ]" -gt "60" ]; then
 		    LINE=$[$(number 100000)*3]
 		    echo "$nick:"
@@ -69,48 +68,47 @@ tail -f -n 0 out | \
 		    lastspam=$(date +%s)
 		fi
 		;;
-	    *!feel*|*tfw*)
+	    !feel)
 		sleep 3s
 	        shuf -n 1 --random-source=/dev/urandom Smileys.TXT
 		;;
-	    *!happy*)
+	    !happy)
 		wordchain Happy.TXT 10
 		;;
-	    *!help*)
+	    !help)
 		echo "$help"
 		;;
-	    *!movie*)
+	    !movie)
 		movie="$(number 100)"
 		grep -m 1 -A 1 "$movie " Movies.TXT
 		;;
-	    *!number*)
+	    !number)
 		number $arg1
 		;;
-	    *!quit*|*!exit*|*!stop*)
+	    !quit|!exit|!stop)
 		echo "The ride never ends"
 		;;
-	    *!quote*)
+	    !quote)
 		sleep 3s
 		fortune=$(ls Fortunes | shuf -n 1 --random-source=/dev/urandom)
 		cat "Fortunes/$fortune"
 		;;
-	    *!recipe*)
+	    !recipe)
 		wordchain Ingredients.TXT 10
 		;;
-	    *!restart*)
+	    !restart)
 		echo "TempleBot restarting..." 
 		exec $0
 		;;
-	    *!source*)
+	    !source)
 		echo "$source"
 		;;
-	    *!words*)
+	    !words|!God*|!god*)
 		wordchain /usr/share/dict/words 10
 		;;
 	    *)
 		if [ "$(echo $cmd | cut -c-1)" == "!" ]; then
 		    echo "$nick: $cmd is not a known command."
-		    cmd=""
 		fi
 		;;
 	esac
