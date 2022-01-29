@@ -42,6 +42,8 @@ number () {
 
 tail -f -n 0 out | \
     while read -r date nick cmd arg1; do
+	nick="${nick#<}"
+	nick="${nick%>}"
 	case $cmd in
 	    !bible|!oracle)
 		if [ "$[ $(date +%s) - lastspam ]" -gt "60" ]; then
