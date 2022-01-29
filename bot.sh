@@ -41,7 +41,7 @@ number () {
 }
 
 tail -f -n 0 out | \
-    while read -r date time nick cmd arg1 msg; do
+    while read -r date nick cmd arg1; do
 	case $cmd in
 	    !bible|!oracle)
 		if [ "$[ $(date +%s) - lastspam ]" -gt "60" ]; then
