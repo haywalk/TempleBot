@@ -1,4 +1,4 @@
-#TempleBot
+# TempleBot
 
 This is an updated and maintained version of TempleBot, the IRC bot written for the
 \#templeos channel on Rizon. It was originally written in 2015 by GitHub user RingTech,
