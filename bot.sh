@@ -6,7 +6,7 @@
 # The script should be run inside the directory of the channel, e.g. "~/irc/irc.rizon.net/#templeos/". This directory should also contain the text files, for full functionality. The code of this program, and those text files, can be found by running "!source".'
 
 source='TempleBot was originally made by RingTech in 2015 for the #templeos channel on Rizon.
-The current repository is located at: https://github.com/haywalk/TempleBot
+You can download the TempleBot source code at: https://templebot.neocities.org
 The original repository was located at: https://github.com/ringtech/TempleBot
 
 In the spirit of TempleOS, this software is dedicated to the public domain. "Do what you want"'
