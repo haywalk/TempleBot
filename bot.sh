@@ -5,8 +5,11 @@
 # ii can be found at http://tools.suckless.org/ii/.
 # The script should be run inside the directory of the channel, e.g. "~/irc/irc.rizon.net/#templeos/". This directory should also contain the text files, for full functionality. The code of this program, and those text files, can be found by running "!source".'
 
-source='https://github.com/ringtech/TempleBot
-I dedicate all copyright interest in this software to the public domain. Do what you want.'
+source='TempleBot was originally made by RingTech in 2015 for the #templeos channel on Rizon.
+The current repository is located at: https://github.com/haywalk/TempleBot
+The original repository was located at: https://github.com/ringtech/TempleBot
+
+In the spirit of TempleOS, this software is dedicated to the public domain. "Do what you want"'
 
 help='Oracle for the #templeos channel. Lets you talk with God. Available commands: !bible !books !feel !happy !help !movie !number !quote !recipe !source !words
 This bot uses random numbers to pick lines and words from a few files. You can use this to talk to God, by making an offering to Him first. An offering can be anything that pleases God, like charming conversation or a good question. You can compare this to praying and opening a book at random, and looking at what it says.'
