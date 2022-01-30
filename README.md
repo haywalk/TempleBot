@@ -14,6 +14,50 @@ Details about the bot, how to install it, and a list of commands, are available 
 
 In the spirit of TempleOS, this project is dedicated to the public domain.
 
+## Commands
+
+These are all the available commands and their optional arguments:
+
+<dl>
+  <dt>!bible / !oracle <i>$LINENUM (default random)</i></dt>
+  <dd>Displays line number <i>$LINENUM</i> from the Bible file.</dd>   
+  
+  <dt>!books</dt>
+  <dd>Displays a random passage from a random book</dd>
+  
+  <dt>!feel</dt>
+  <dd>Displays a random emoticon</dd>
+  <dt>!happy <i>$NUMBER (default 10) </i></dt>
+  <dd>Displays <i>$NUMBER</i> random 'happy' words from God.</dd>
+  
+  <dt>!help</dt>
+  <dd>Displays available commands and description of the bot</dd>
+      
+  <dt>!movie</dt>
+  <dd>Displays the title of a random movie</dd>
+      
+  <dt>!number <i>$MAX (default 10)</i></dt>
+  <dd>Displays a number between 1 and <i>$MAX</i>.</dd>
+      
+  <dt>!quit / !exit / !stop</dt>
+  <dd>Doesn't stop the bot</dd>
+      
+  <dt>!quote</dt>
+  <dd>Displays a random fortune</dd>
+      
+  <dt>!recipe <i>$NUMBER (default 10)</i></dt>
+  <dd>Generates a random recipe made up of <i>$NUMBER</i> ingredients.</dd>
+      
+  <dt>!restart</dt>
+  <dd>Restarts the bot</dd>
+      
+  <dt>!source</dt>
+  <dd>Displays credits and link to source code</dd>
+      
+  <dt>!words / !God <i>$NUMBER (default 10)</i></dt>
+  <dd>Displays <i>$NUMBER</i> random words from God.</dd>
+</dl>
+
 ## Original Description from 2015
 
 This is TempleBot, written by ring for the #templeos channel at irc.rizon.net.
