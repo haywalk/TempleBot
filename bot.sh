@@ -114,7 +114,7 @@ tail -f -n 0 out | \
 			;;
 		
 		# !books : Random line from a book
-	    !books)
+		!books)
 			if [ "$[ $(date +%s) - lastspam ]" -gt "60" ]; then
 				LINE=$[$(number 100000)*3]
 				echo "$nick:"
