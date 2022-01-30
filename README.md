@@ -29,6 +29,6 @@ This bot uses random numbers to pick lines and words from a few files. You can u
 * ~~Get the bot working~~
 * ~~Make homepage and basic documentation~~
 * ~~Add comments to source code and clean up formatting~~
-* Improve documentation for individual commands
+* ~~Improve documentation for individual commands on website~~
 * Comment and clean up standalone version of the bot
 * Begin work on restoring Guest39's version of the bot
