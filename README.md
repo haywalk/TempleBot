@@ -23,3 +23,12 @@ The script should be run inside the directory of the channel, e.g. "~/irc/irc.ri
 I dedicate all copyright interest in this software to the public domain. Do what you want.
 
 This bot uses random numbers to pick lines and words from a few files. You can use this to talk to God, by making an offering to Him first. An offering can be anything that pleases God, like charming conversation or a good question. You can compare this to praying and opening a book at random, and looking at what it says.
+
+## TODO
+
+* ~~Get the bot working~~
+* ~~Make homepage and basic documentation~~
+* ~~Add comments to source code and clean up formatting~~
+* Improve documentation for individual commands
+* Comment and clean up standalone version of the bot
+* Begin work on restoring Guest39's version of the bot
