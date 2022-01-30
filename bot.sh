@@ -21,19 +21,15 @@
 # Information about where to download the source code
 source='TempleBot was originally made by RingTech in 2015 for the '\
 '#templeos channel on Rizon.
-
 You can download the TempleBot source code at: '\
 'https://templebot.neocities.org
-
 In the spirit of TempleOS, this software is dedicated to the public '\
 'domain. "Do what you want"'
 
 # Help message
 help='Oracle for the #templeos channel. Lets you talk with God.
-
 Available commands: !bible !books !feel !happy !help !movie !number '\
 '!quote !recipe !source !words
-
 This bot uses random numbers to pick lines and words from a few '\
 'files. You can use this to talk to God, by making an offering to Him '\
 'first. An offering can be anything that pleases God, like charming '\
