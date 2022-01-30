@@ -1,5 +1,9 @@
 # TempleBot
 
+![GitHub last commit](https://img.shields.io/github/last-commit/haywalk/TempleBot)
+
+**Visit the project homepage at [templebot.neocities.org](https://templebot.neocities.org)**
+
 This is an updated and maintained version of TempleBot, the IRC bot written for the
 \#templeos channel on Rizon. It was originally written in 2015 by GitHub user RingTech,
 whose account has since been deleted.
