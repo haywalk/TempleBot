@@ -20,16 +20,17 @@
 
 # Information about where to download the source code
 source='TempleBot was originally made by RingTech in 2015 for the '\
-'#templeos channel on Rizon.
+'#templeos channel on Rizon, and features were added in 2019 by '\
+'Guest39.
 You can download the TempleBot source code at: '\
 'https://templebot.neocities.org
 In the spirit of TempleOS, this software is dedicated to the public '\
-'domain. "Do what you want"'
+'domain. "Do what you want."'
 
 # Help message
 help='Oracle for the #templeos channel. Lets you talk with God.
-Available commands: !bible !books !feel !happy !help !movie !number '\
-'!quote !recipe !source !words
+Available commands: !bible !books !checkem !feel !happy !help !movie '\
+'!number !quote !recipe !source !tadquote !templeos !terry !words
 This bot uses random numbers to pick lines and words from a few '\
 'files. You can use this to talk to God, by making an offering to Him '\
 'first. An offering can be anything that pleases God, like charming '\
@@ -83,9 +84,7 @@ number () {
 }
 
 # Read from the output file until EOF (whenever ii stops running)
-tail -f -n 0 out | \
-	# Input split into timestamp, nick, command, argument, and message.
-	while read -r date nick cmd arg1 msg; do 
+tail -f -n 0 out | while read -r date nick cmd arg1 msg; do 
 
 	# Remove < and > from around nick
 	nick="${nick#<}"
@@ -95,6 +94,7 @@ tail -f -n 0 out | \
 	case $cmd in
 	
 		# !bible / !oracle : Random bible passage
+		# (original)
 		!bible|!oracle)
 			if [ "$[ $(date +%s) - lastspam ]" -gt "60" ]; then
 				case $arg1 in
@@ -114,6 +114,7 @@ tail -f -n 0 out | \
 			;;
 		
 		# !books : Random line from a book
+		# (original)
 		!books)
 			if [ "$[ $(date +%s) - lastspam ]" -gt "60" ]; then
 				LINE=$[$(number 100000)*3]
@@ -124,39 +125,52 @@ tail -f -n 0 out | \
 			fi
 			;;
 		
+		# !checkem : Random number
+		# (From Guest39 version)
+		!checkem)
+			echo $(( ( RANDOM % 10000 )  + 1 ))
+			;;
+		
 		# !feel : Random emoticon
+		# (original)
 		!feel)
 			sleep 3s
 			shuf -n 1 --random-source=/dev/urandom Smileys.TXT
 			;;
 
 		# !happy : Random happy words from God
+		# (original)
 		!happy)
 			wordchain Happy.TXT 10
 			;;
 		
 		# !help : Display help message
+		# (original)
 		!help)
 			echo "$help"
 			;;
 
 		# !movie : Random movie title
+		# (original)
 		!movie)
 			movie="$(number 100)"
 			grep -m 1 -A 1 "$movie " Movies.TXT
 			;;
 
 		# !number : Random number
+		# (original)
 		!number)
 			number $arg1
 			;;
 		
 		# !quit / !exit / !stop : Don't quit (display snarky message)
+		# (original)
 		!quit|!exit|!stop)
 			echo "The ride never ends"
 			;;
 
 		# !quote : Random fortune
+		# (original)
 		!quote)
 			sleep 3s
 			fortune=$(ls Fortunes | shuf -n 1 \
@@ -165,28 +179,62 @@ tail -f -n 0 out | \
 			;;
 		
 		# !recipe : Random recipe
+		# (original)
 		!recipe)
 			wordchain Ingredients.TXT 10
 			;;
 
 		# !restart : Restart the IRC bot
+		# (original)
 		!restart)
 			echo "TempleBot restarting..." 
 			exec $0
 			;;
 
 		# !source : Display information about where to download the bot
+		# (original)
 		!source)
 			echo "$source"
 			;;
 
-		# !words / !God : Random words from God
-		!words|!God*|!god*)
+		# !tadquote / !tquote : Random (mostly clean) Terry Twitter quote
+		# (from Guest39 version)
+		!tadquote|!tquote)
+			echo "Terry says..."
+			shuf -n 1 --random-source=/dev/urandom CleanTweets.TXT
+			;;
+
+		# !terry / !tad : Show an ASCII-art image of King Terry
+		# (from Guest39 version)
+		!terry|!tad)
+			# Prevent spam (or else bot will be kicked for flooding)
+			if [ "$[ $(date +%s) - lastspam ]" -gt "60" ]; then
+				# Output the file slowly to avoid flooding
+				perl -pe "system 'sleep .25'" TADPortrait.TXT
+				lastspam=$(date +%s)
+			fi
+			;;
+
+		# !tos : Show an ASCII-art image of the TempleOS logo.
+		# (from 2022 version)
+		!templeos|!tos)
+			# Prevent spam (or else bot will be kicked for flooding)
+			if [ "$[ $(date +%s) - lastspam ]" -gt "60" ]; then
+				# Output the file slowly to avoid flooding
+				perl -pe "system 'sleep .25'" TOSLogo.TXT
+				lastspam=$(date +%s)
+			fi
+			;;
+
+		# !words / !God / !gw : Random words from God
+		# (original)
+		!words|!God*|!god*|!gw)
 			wordchain /usr/share/dict/words 10
 			;;
 
 		# If someone typed a line that started with '!' but wasn't a
 		# command, display error message
+		# (original)
 		*)
 			if [ "$(echo $cmd | cut -c-1)" == "!" ]; then
 				echo "$nick: $cmd is not a known command."
@@ -194,5 +242,5 @@ tail -f -n 0 out | \
 			;;
 	esac
 
-	# Send the bot's output to the 'in' file (to be sent to the channel)
-	done > in
+# Send the bot's output to the 'in' file (to be sent to the channel)
+done > in
