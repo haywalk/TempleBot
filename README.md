@@ -69,6 +69,10 @@ These are all the available commands and their optional arguments:
   <dd>Displays <i>$NUMBER</i> random words from God.</dd>
 </dl>
 
+## Installation
+
+TempleBot runs on [ii](https://tools.suckless.org/ii). ii is a file-based IRC client that is excellent for writing bots. Each server, channel, and user gets an in-file (actually a named pipe) and an out-file. Text sent by the server/others in a channel will appear in the out-file, and text that gets sent to the in-file will be sent to the server/channel/etc. In order for TempleBot to work, bot.sh and all the other data files must be in the directory of the channel you want it to run on. [See ii's website](https://tools.suckless.org/ii) for information about setting up ii.
+
 ## Original Description from 2015
 
 This is TempleBot, written by ring for the #templeos channel at irc.rizon.net.
