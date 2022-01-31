@@ -1,1 +1,1 @@
-The ASCII art in the bot is generated from these images using jp2a and a2m.
+The ASCII art in the bot is generated from these images using [jp2a](https://csl.name/jp2a/) (to convert them to ANSI-coloured ASCII) and [a2m](https://github.com/tat3r/a2m) (to convert the ANSI colours to IRC colours).
