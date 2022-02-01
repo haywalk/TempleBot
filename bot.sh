@@ -210,7 +210,7 @@ tail -f -n 0 out | while read -r date nick cmd arg1 msg; do
 			# Prevent spam (or else bot will be kicked for flooding)
 			if [ "$[ $(date +%s) - lastspam ]" -gt "60" ]; then
 				# Output the file slowly to avoid flooding
-				perl -pe "system 'sleep .25'" TADPortrait.TXT
+				perl -pe "system 'sleep .25'" TADPortrait-IRC.TXT
 				lastspam=$(date +%s)
 			fi
 			;;
@@ -221,7 +221,7 @@ tail -f -n 0 out | while read -r date nick cmd arg1 msg; do
 			# Prevent spam (or else bot will be kicked for flooding)
 			if [ "$[ $(date +%s) - lastspam ]" -gt "60" ]; then
 				# Output the file slowly to avoid flooding
-				perl -pe "system 'sleep .25'" TOSLogo.TXT
+				perl -pe "system 'sleep .25'" TOSLogo-IRC.TXT
 				lastspam=$(date +%s)
 			fi
 			;;
