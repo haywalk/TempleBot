@@ -89,4 +89,5 @@ This bot uses random numbers to pick lines and words from a few files. You can u
 ## Past Repositories
 
 Original: https://github.com/ringtech/TempleBot
+
 Guest39's Version: https://gitgud.io/Guest39/TempleBot
