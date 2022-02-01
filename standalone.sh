@@ -117,7 +117,7 @@ while read -r cmd arg1 msg; do
 		# !feel : Random emoticon
 		# (original)
 		!feel)
-			sleep 3s
+			sleep 3s # Give God time to think, that's polite
 			shuf -n 1 --random-source=/dev/urandom ./Data/Smileys.TXT
 			;;
 
@@ -155,7 +155,7 @@ while read -r cmd arg1 msg; do
 		# !quote : Random fortune
 		# (original)
 		!quote)
-			sleep 3s
+			sleep 3s # Give God time to think, that's polite
 			fortune=$(ls Fortunes | shuf -n 1 \
 				--random-source=/dev/urandom)
 			cat "Fortunes/$fortune"
@@ -184,7 +184,7 @@ while read -r cmd arg1 msg; do
 		# (from Guest39 version)
 		!tadquote|!tquote)
 			echo "Terry says..."
-			sleep 3s
+			sleep 3s # Give God time to think, that's polite
 			shuf -n 1 --random-source=/dev/urandom ./Data/CleanTweets.TXT
 			;;
 

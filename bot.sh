@@ -98,12 +98,12 @@ tail -f -n 0 out | while read -r date nick cmd arg1 msg; do
 		!bible|!oracle)
 			if [ "$[ $(date +%s) - lastspam ]" -gt "60" ]; then
 				case $arg1 in
-				''|*[!0-9]*)
-					LINE=$(number 100000)
-					;;
-				*)
-					LINE=$arg1
-					;;
+					''|*[!0-9]*)
+						LINE=$(number 100000)
+						;;
+					*)
+						LINE=$arg1
+						;;
 				esac
 				
 				echo "$nick:"
@@ -134,7 +134,7 @@ tail -f -n 0 out | while read -r date nick cmd arg1 msg; do
 		# !feel : Random emoticon
 		# (original)
 		!feel)
-			sleep 3s
+			sleep 3s # Give God time to think, that's polite
 			shuf -n 1 --random-source=/dev/urandom ./Data/Smileys.TXT
 			;;
 
@@ -172,7 +172,7 @@ tail -f -n 0 out | while read -r date nick cmd arg1 msg; do
 		# !quote : Random fortune
 		# (original)
 		!quote)
-			sleep 3s
+			sleep 3s # Give God time to think, that's polite
 			fortune=$(ls Fortunes | shuf -n 1 \
 				--random-source=/dev/urandom)
 			cat "Fortunes/$fortune"
@@ -201,6 +201,7 @@ tail -f -n 0 out | while read -r date nick cmd arg1 msg; do
 		# (from Guest39 version)
 		!tadquote|!tquote)
 			echo "Terry says..."
+			sleep 3s # Give God time to think, that's polite
 			shuf -n 1 --random-source=/dev/urandom ./Data/CleanTweets.TXT
 			;;
 
