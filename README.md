@@ -4,11 +4,9 @@
 
 This is an updated and maintained version of TempleBot, the IRC bot written for the
 \#templeos channel on Rizon. It was originally written in 2015 by GitHub user RingTech,
-whose account has since been deleted, and further added onto by Guest39.
+whose account has since been deleted, and further added onto by Guest39 in 2019.
 
-The bot runs on top of [ii](https://tools.suckless.org/ii/), the Suckless IRC client.
-Details about the bot, how to install it, and a list of commands, are available at
-[templebot.neocities.org](https://templebot.neocities.org).
+See below for installation instructions.
 
 In the spirit of TempleOS, this project is dedicated to the public domain.
 
@@ -87,3 +85,8 @@ The script should be run inside the directory of the channel, e.g. "~/irc/irc.ri
 I dedicate all copyright interest in this software to the public domain. Do what you want.
 
 This bot uses random numbers to pick lines and words from a few files. You can use this to talk to God, by making an offering to Him first. An offering can be anything that pleases God, like charming conversation or a good question. You can compare this to praying and opening a book at random, and looking at what it says.
+
+## Past Repositories
+
+Original: https://github.com/ringtech/TempleBot
+Guest39's Version: https://gitgud.io/Guest39/TempleBot
