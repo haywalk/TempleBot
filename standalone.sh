@@ -6,7 +6,8 @@
 # This is the standalone verison of TempleBot, meant to be run in
 # your terminal instead of deployed on an IRC channel. The standalone
 # version also lacks spam-prevention features present in the
-# IRC version.
+# IRC version. It must be run in the same directory as the Fortune/ and
+# Data/ directories in order to work.
 #
 # Project homepage: https://templebot.neocities.org
 # Current repository: https://github.com/haywalk/TempleBot
@@ -79,7 +80,7 @@ number () {
 
 # Read from stdin file until EOF (whenever ii stops running)
 while read -r cmd arg1 msg; do 
-
+	
 	# Switch statement checks what command was given
 	case $cmd in
 	
@@ -96,7 +97,7 @@ while read -r cmd arg1 msg; do
 			esac
 				
 			echo "Line $LINE:"
-			tail -n $LINE Bible.TXT | head -n 16
+			tail -n $LINE ./Data/Bible.TXT | head -n 16
 			;;
 		
 		# !books : Random line from a book
@@ -104,7 +105,7 @@ while read -r cmd arg1 msg; do
 		!books)
 			LINE=$[$(number 100000)*3]
 			echo "Line $LINE:"
-			tail -n $LINE Books.TXT | head -n 16
+			tail -n $LINE ./Data/Books.TXT | head -n 16
 			;;
 		
 		# !checkem : Random number
@@ -117,13 +118,13 @@ while read -r cmd arg1 msg; do
 		# (original)
 		!feel)
 			sleep 3s
-			shuf -n 1 --random-source=/dev/urandom Smileys.TXT
+			shuf -n 1 --random-source=/dev/urandom ./Data/Smileys.TXT
 			;;
 
 		# !happy : Random happy words from God
 		# (original)
 		!happy)
-			wordchain Happy.TXT 10
+			wordchain ./Data/Happy.TXT 10
 			;;
 		
 		# !help : Display help message
@@ -136,7 +137,7 @@ while read -r cmd arg1 msg; do
 		# (original)
 		!movie)
 			movie="$(number 100)"
-			grep -m 1 -A 1 "$movie " Movies.TXT
+			grep -m 1 -A 1 "$movie " ./Data/Movies.TXT
 			;;
 
 		# !number : Random number
@@ -163,7 +164,7 @@ while read -r cmd arg1 msg; do
 		# !recipe : Random recipe
 		# (original)
 		!recipe)
-			wordchain Ingredients.TXT 10
+			wordchain ./Data/Ingredients.TXT 10
 			;;
 
 		# !restart : Restart the IRC bot
@@ -183,19 +184,20 @@ while read -r cmd arg1 msg; do
 		# (from Guest39 version)
 		!tadquote|!tquote)
 			echo "Terry says..."
-			shuf -n 1 --random-source=/dev/urandom CleanTweets.TXT
+			sleep 3s
+			shuf -n 1 --random-source=/dev/urandom ./Data/CleanTweets.TXT
 			;;
 
 		# !terry / !tad : Show an ASCII-art image of King Terry
 		# (from Guest39 version)
 		!terry|!tad)
-			cat TADPortrait-TERM.TXT
+			cat ./Data/TADPortrait-TERM.TXT
 			;;
 
 		# !tos : Show an ASCII-art image of the TempleOS logo.
 		# (from 2022 version)
 		!templeos|!tos)
-			cat TOSLogo-TERM.TXT
+			cat ./Data/TOSLogo-TERM.TXT
 			;;
 
 		# !words / !God / !gw : Random words from God

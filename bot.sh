@@ -15,8 +15,8 @@
 # ii can be found at: https://tools.suckless.org/ii/
 #
 # The script should be run inside the directory of the channel, e.g.
-# "~/irc/irc.rizon.net/#templeos/". The other files associated with
-# the bot (e.g. Bible.TXT) should also be in that directory.
+# "~/irc/irc.rizon.net/#templeos/". The Data/ and Fortunes/ directories
+# must also be in the channel folder.
 
 # Information about where to download the source code
 source='TempleBot was originally made by RingTech in 2015 for the '\
@@ -108,7 +108,7 @@ tail -f -n 0 out | while read -r date nick cmd arg1 msg; do
 				
 				echo "$nick:"
 				echo "Line $LINE:"
-				tail -n $LINE Bible.TXT | head -n 16
+				tail -n $LINE ./Data/Bible.TXT | head -n 16
 				lastspam=$(date +%s)
 			fi
 			;;
@@ -120,7 +120,7 @@ tail -f -n 0 out | while read -r date nick cmd arg1 msg; do
 				LINE=$[$(number 100000)*3]
 				echo "$nick:"
 				echo "Line $LINE:"
-				tail -n $LINE Books.TXT | head -n 16
+				tail -n $LINE ./Data/Books.TXT | head -n 16
 				lastspam=$(date +%s)
 			fi
 			;;
@@ -135,13 +135,13 @@ tail -f -n 0 out | while read -r date nick cmd arg1 msg; do
 		# (original)
 		!feel)
 			sleep 3s
-			shuf -n 1 --random-source=/dev/urandom Smileys.TXT
+			shuf -n 1 --random-source=/dev/urandom ./Data/Smileys.TXT
 			;;
 
 		# !happy : Random happy words from God
 		# (original)
 		!happy)
-			wordchain Happy.TXT 10
+			wordchain ./Data/Happy.TXT 10
 			;;
 		
 		# !help : Display help message
@@ -154,7 +154,7 @@ tail -f -n 0 out | while read -r date nick cmd arg1 msg; do
 		# (original)
 		!movie)
 			movie="$(number 100)"
-			grep -m 1 -A 1 "$movie " Movies.TXT
+			grep -m 1 -A 1 "$movie " ./Data/Movies.TXT
 			;;
 
 		# !number : Random number
@@ -181,7 +181,7 @@ tail -f -n 0 out | while read -r date nick cmd arg1 msg; do
 		# !recipe : Random recipe
 		# (original)
 		!recipe)
-			wordchain Ingredients.TXT 10
+			wordchain ./Data/Ingredients.TXT 10
 			;;
 
 		# !restart : Restart the IRC bot
@@ -201,7 +201,7 @@ tail -f -n 0 out | while read -r date nick cmd arg1 msg; do
 		# (from Guest39 version)
 		!tadquote|!tquote)
 			echo "Terry says..."
-			shuf -n 1 --random-source=/dev/urandom CleanTweets.TXT
+			shuf -n 1 --random-source=/dev/urandom ./Data/CleanTweets.TXT
 			;;
 
 		# !terry / !tad : Show an ASCII-art image of King Terry
@@ -210,7 +210,7 @@ tail -f -n 0 out | while read -r date nick cmd arg1 msg; do
 			# Prevent spam (or else bot will be kicked for flooding)
 			if [ "$[ $(date +%s) - lastspam ]" -gt "60" ]; then
 				# Output the file slowly to avoid flooding
-				perl -pe "system 'sleep .25'" TADPortrait-IRC.TXT
+				perl -pe "system 'sleep .25'" ./Data/TADPortrait-IRC.TXT
 				lastspam=$(date +%s)
 			fi
 			;;
@@ -221,7 +221,7 @@ tail -f -n 0 out | while read -r date nick cmd arg1 msg; do
 			# Prevent spam (or else bot will be kicked for flooding)
 			if [ "$[ $(date +%s) - lastspam ]" -gt "60" ]; then
 				# Output the file slowly to avoid flooding
-				perl -pe "system 'sleep .25'" TOSLogo-IRC.TXT
+				perl -pe "system 'sleep .25'" ./Data/TOSLogo-IRC.TXT
 				lastspam=$(date +%s)
 			fi
 			;;
